@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="Monkey.css">
+    <div class="topnav">
+        <a href="index.html">Home</a>
+        <a href="TFC.html">TFC</a>
+        <a href="SU.html">Sign-Up</a>
+        <a class="active" href="notes.html">Notes</a>
+        <div class="search-container">
+            <form action="/action_page.php">
+              <input type="text" placeholder="Search.." name="search">
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+      </div>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        .items {
+          position: absolute;
+          z-index: 9;
+          background-color: #f1f1f1;
+          border: 1px solid #d3d3d3;
+          text-align: center;
+        }
+        .itemsheader {
+          padding: 10px;
+          cursor: move;
+          z-index: 10;
+          background-color: #2196F3;
+          color: #fff;
+        }
+        .parallax {
+          /* The image used */
+          background-image: url("ParallaxImage.jpg");
+          /* Set a specific height */
+          min-height: 500px; 
+          /* Create the parallax scrolling effect */
+          background-attachment: fixed;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+      </style>
+    </head>
+    <h1>Parallax Scrolling and Draggable elements</h1>
+    <div class="parallax" id="parallaximage"></div>
+    <div style="height:200px;background-color:rgb(70, 70, 70);font-size:36px">
+      This image is of a forest, Heck's home, since he is a monkey.
+      </div>
+    <!-- Draggable DIV -->
+  <div class="items" id="item1">
+  <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+  <div class="itemsheader" id="item1header">Item #1</div>
+  <p>Non-existent item description...</p>
+
+  <div class="items" id="item2">
+    <!-- Include a header DIV with the same name as the draggable DIV, followed by "header" -->
+    <div class="itemsheader" id="item2header">Item #2</div>
+    <p>Non-existent item description...</p>
+  </div>
+    <script>
+      // Make the DIV element draggable:
+dragElement(document.getElementById("item1"));
+dragElement(document.getElementById("item2"));
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+    </script>
+    
+</html>
